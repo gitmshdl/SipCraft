@@ -35,7 +35,7 @@ const App = () => {
     method: "GET",
     url: "https://the-cocktail-db3.p.rapidapi.com/",
     headers: {
-      "x-rapidapi-key": "ada9d28efdmshe548c11ca979f9ap11c6c9jsneb31d468b424",
+      "x-rapidapi-key": "6463a727f5mshe4e09e4714d1c96p1f82b5jsne811d13059e6",
       "x-rapidapi-host": "the-cocktail-db3.p.rapidapi.com",
     },
   };
@@ -68,6 +68,7 @@ const App = () => {
         ItemSeparatorComponent={<View style={{ height: 16 }} />}
         ListEmptyComponent={<Text>No items found</Text>}
         contentContainerStyle={styles.contentContainerStyle}
+        ListHeaderComponent={<Text style={styles.headerText}>Sip?</Text>}
       />
     </SafeAreaView>
   );
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: "#fff",
-    borderRadius: 8,
+    borderRadius: 4,
     borderWidth: 1,
     marginBottom: 15,
     shadowColor: "#333",
@@ -92,9 +93,11 @@ const styles = StyleSheet.create({
   },
   cardImage: {
     width: "100%",
+    height: 200,
   },
   cardContent: {
     padding: 15,
+    alignItems: "center",
   },
   cardTitle: {
     fontSize: 18,
@@ -104,6 +107,12 @@ const styles = StyleSheet.create({
   cardDifficulty: {
     fontSize: 14,
     color: "#777",
+  },
+  headerText: {
+    fontSize: 24,
+    textAlign: "center",
+    marginBottom: 12,
+    fontWeight: "bold",
   },
 });
 
