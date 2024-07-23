@@ -12,33 +12,6 @@ import {
 } from "react-native";
 import axios from "axios";
 
-const tempData = [
-  {
-    id: "1",
-    title: "Nutella and cognac coffee cocktail",
-    difficulty: "Easy",
-    image: "https://apipics.s3.amazonaws.com/coctails_api/1.jpg",
-  },
-  {
-    id: "2",
-    title: "Easy rhubarb cordial",
-    difficulty: "Easy",
-    image: "https://apipics.s3.amazonaws.com/coctails_api/2.jpg",
-  },
-  {
-    id: "3",
-    title: "Bottled chocolate orange negroni",
-    difficulty: "Easy",
-    image: "https://apipics.s3.amazonaws.com/coctails_api/3.jpg",
-  },
-  {
-    id: "4",
-    title: "Pickled bramble martini",
-    difficulty: "Easy",
-    image: "https://apipics.s3.amazonaws.com/coctails_api/4.jpg",
-  },
-];
-
 const Card = ({ title, difficulty, image }) => {
   return (
     <View style={styles.card}>
@@ -56,25 +29,47 @@ const Card = ({ title, difficulty, image }) => {
 };
 
 const App = () => {
+  const [postList, setPostList] = useState([]);
+
+  const options = {
+    method: "GET",
+    url: "https://the-cocktail-db3.p.rapidapi.com/",
+    headers: {
+      "x-rapidapi-key": "ada9d28efdmshe548c11ca979f9ap11c6c9jsneb31d468b424",
+      "x-rapidapi-host": "the-cocktail-db3.p.rapidapi.com",
+    },
+  };
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.request(options);
+      setPostList(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
-    <>
-      <SafeAreaView style={styles.container}>
-        <FlatList
-          data={tempData}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <Card
-              title={item.title}
-              difficulty={item.difficulty}
-              image={item.image}
-            />
-          )}
-          ItemSeparatorComponent={<View style={{ height: 16 }} />}
-          ListEmptyComponent={<Text>No items found</Text>}
-          contentContainerStyle={styles.contentContainerStyle}
-        />
-      </SafeAreaView>
-    </>
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={postList}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <Card
+            title={item.title}
+            difficulty={item.difficulty}
+            image={item.image}
+          />
+        )}
+        ItemSeparatorComponent={<View style={{ height: 16 }} />}
+        ListEmptyComponent={<Text>No items found</Text>}
+        contentContainerStyle={styles.contentContainerStyle}
+      />
+    </SafeAreaView>
   );
 };
 
@@ -87,7 +82,6 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "#fff",
     borderRadius: 8,
-    overflow: "hidden",
     borderWidth: 1,
     marginBottom: 15,
     shadowColor: "#333",
